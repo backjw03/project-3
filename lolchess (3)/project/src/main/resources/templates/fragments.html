@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="header(member)">
+    <div style="background-color: black">
+        <center><img src="images/banner.png" style="display: block"></center>
+    </div>
+    <div class="top-bar">
+        <h2 class="top-left top-home" onclick="gohome()">TEAMFIGHT TACTICS</h2>
+        <nav class="top-right">
+            <ul>
+                <th:block th:if="${member == null}">
+                    <li><a th:href="@{loginForm}">로그인</a></li>
+                    <li><a th:href="@{joinForm}">회원가입</a></li>
+                </th:block>
+                <th:block th:unless="${member == null}">
+                    <li><a th:href="@{boardList}">자유 게시판</a></li>
+                    <li th:text="${member.m_id}+'님'"></li>
+                    <li><a th:href="@{logout}">로그아웃</a></li>
+                </th:block>
+            </ul>
+        </nav>
+    </div>
+    <script th:inline="javascript">
+        const mem = [[${session.member}]];
+        function gohome(){
+            if(mem != null){
+                location.href = "boardList?pageNum=1";
+            } else {
+                location.href = "/";
+            }
+        }
+    </script>
+</div>
+<div th:fragment="footer" class="footer-bar">
+    <div class="content">
+        <div class="fcontents">
+            <span class="footer-txt">
+                &copy; LoLCHESS.GG. All Rights Reserved. TFT@LoLCHESS.GG
+            </span>
+            <address>lolchess.gg is hosted by PlayXP Inc. lolchess.gg isn’t endorsed by Riot Games and doesn’t reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.</address>
+        </div>
+    </div>
+</div>
+</body>
+</html>
